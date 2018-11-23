@@ -545,32 +545,36 @@ equal 1 and the costs of insertion, and deletion equal 2.
 
     \subsection{Proof of Correctness}\label{proof-of-correctness}
 
-While calculating the given problems along with the added problem
-correctly our algorithm has utilized all possible solutions (insert,
-delete and substitution). The subproblems and their solutions are finite
-and can only be of the following nature: (i-1, j), (i, j-1) and (i-1,
-j-1). The algorithm provides a correct solution to the above problems
-and it's subproblems showing the full extent of it's functionality as
-seen in the above table. We can therefore say that the algorithm can
-wield any of the possible solutions successfully. Now when a problem is
-larger (longer text strings) we can expect it to deliver the correct
-outcome because it is just a matter of having the recursive part of our
-algorithm run longer until it reaches the end. We can therefore assume
-that it will also prove to be correct for problems of larger size for,
-in a longer chain of subproblems (bigger strings of text) the
-subproblems will not differ in nature nor will the available solutions
-and the algorithm's ability to apply them.
+We prove correctness by induction. The algorithm correctly identifies
+the distance between a string, and an empty string as the length of the
+nonempty string. Now suppose, we have calculated the minimal alignment
+for k \textless{} i, l \textless{} j. We will show that the algorithm
+identifies minimal alignment in the next step, completing the proof of
+correctness. The edit distance, \(ed(A_i, B_j)\) at \(i,j\) for the
+strings \(A, B\) is based on the optimal edit sequence. Based on the
+previous results, the algorithm computes the minimum of:
 
-We can equally say that if a person can take an initial step in a
-staircase there is nothing technically lacking in order to take the
-remaining steps.
+\begin{itemize}
+\tightlist
+\item
+  \(ed(A_i, B_j) = ed(A_{i-1}, B_{j-1}) + cost(Substitution)\) or
+  \(ed(A_i, B_j) = ed(A_{i-1}, B_{j-1})\) if \(A_i = B_j\)
+\item
+  \(ed(A_i, B_j) = ed(A_{i}, B_{j-1}) + cost(Insertion)\)
+\item
+  \(ed(A_i, B_j) = ed(A_{i-1}, B_{j}) + cost(Deletion)\)
+\end{itemize}
+
+Since the previous edit sequence is optimal, and the algorithm computes
+the minimal value for all possible choices, it derives the minimum,
+agreeing with the definition of the distance.
 
     \section{Huffman codes}\label{huffman-codes}
 
 \subsection{Discussion of the probem}\label{discussion-of-the-probem}
 
-Computers store information in binary codes, and thus translating
-alphabets or other symbols used by humans into binary code is a very old
+Computers store information in binary codes. Translating alphabets or
+other symbols used by humans into binary code is therefore a very old
 and fundamental problem in computer science. Dictionaries that translate
 alphabets to code can be created with different objectives; they can be
 optimised to mininimise storage space or lookup time, for example, and
@@ -578,30 +582,52 @@ this can be done with large alphabet or symbol systems in mind, or with
 small symbol systems and large and variable frequency text inputs in
 mind.
 
-In this problem, we are faced with a small, fixed length alphabet for
-which we want a bindary encoding dictionary that is built to minimise
+In this problem, we are faced with a short, fixed length alphabet for
+which we want a bindary encoding algorithm that is built to minimise
 storage space given variable text sizes and character frequencies. The
-idea is to custom-build the dictionary given a certain piece of text, so
+idea is to custom-build a dictionary given a certain piece of text, so
 that we can minimise the storage space required for this particular
 piece of text.
 
-Fundamental to the problem is that we base the code on the frequencies
-of characters found in the text to ensure the lowest cost compression.
-Based on this frequency count, we propose to build up a tree that
-assigns the shortest codes to elements with high frequency and the
-longest codes to elements with low frequency.
+To solve this problem we need to create a dictionary based on the
+frequencies of characters found in the text, ensuring the lowest cost
+compression. The dictionary needs to assign the shortest codes to
+elements with high frequency and the longest codes to elements with low
+frequency. What complicates this problem is that we need to ensure that
+our encoding function uniquely assigns codes to characters, so no code
+can be a prefix to another code. We therefore face a tradeoff: If we
+assifgn a short code to a high frequency character to reduce the cost
+incurred in the encoding of this frequency, then all other code
+assignments will be relatively long and more costly, because they cannot
+begin with this short prefix. The problem does not have a known
+analytical solution, and trying out all possible encoding functions
+would be prohibitively expensive.
 
-What complicates this problem is that we need to ensure that our
-encoding function uniquely assigns codes to characters, so no code can
-be a prefix to another code. This means that there are potentially many
-ways to
+The algorithm we propose is a greedy algorithm, that works through the
+text string one by one. It begins by creating a table of frequencies of
+characters found in the text and sorting it based on frequency. Each
+tuple of characer and frequency is called a node.
 
-This is done by sorting the table of characters and frequencies, and
-then merging the lowest frequency nodes into a new node. The value of
-the new node is the sum of the frequency of the two characters that it
-merges. Based on this value, the node is then placed back in the
-frequency table. Continuing with this process, we aggregate the
-individual characters into nested lists.
+The algorithm then merges the two lowest frequency characters/nodes into
+a new node. The value of the new node is the sum of the frequency of the
+two characters, or the value of the two nodes that it merges. Based on
+this value, the node is then placed back in the frequency table.
+Continuing with this process, we aggregate the individual characters
+into nested lists, until the frequency table contains only one node with
+many nested nodes. The result is also called a Huffman tree, named after
+the inventor of the algorithm (at the time a MIT Master's student).
+
+The cost of this algorithm is O(n). It can be run in linear time,
+because the cost of most operations only depends on the length of the
+alphabet used, which is constant in this configuration of the problem.
+The only operations that depend on the size of the text input n are the
+frequency count, which requires us to iterate through the text once, and
+the encoding, which again requires us to iterate through the text once.
+There is no recursion required.
+
+In the next subsection we present the code for this algorithm, along
+with short descriptions of each function and their associated cost, and
+the resulting dictionary for the sample text inputs we were given.
 
     \subsection{The proposed algorithm}\label{the-proposed-algorithm}
 
