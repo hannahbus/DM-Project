@@ -1,0 +1,932 @@
+
+% Default to the notebook output style
+
+    
+
+
+% Inherit from the specified cell style.
+
+
+
+
+    
+\documentclass[11pt]{article}
+
+    
+    
+    \usepackage[T1]{fontenc}
+    % Nicer default font (+ math font) than Computer Modern for most use cases
+    \usepackage{mathpazo}
+
+    % Basic figure setup, for now with no caption control since it's done
+    % automatically by Pandoc (which extracts ![](path) syntax from Markdown).
+    \usepackage{graphicx}
+    % We will generate all images so they have a width \maxwidth. This means
+    % that they will get their normal width if they fit onto the page, but
+    % are scaled down if they would overflow the margins.
+    \makeatletter
+    \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth
+    \else\Gin@nat@width\fi}
+    \makeatother
+    \let\Oldincludegraphics\includegraphics
+    % Set max figure width to be 80% of text width, for now hardcoded.
+    \renewcommand{\includegraphics}[1]{\Oldincludegraphics[width=.8\maxwidth]{#1}}
+    % Ensure that by default, figures have no caption (until we provide a
+    % proper Figure object with a Caption API and a way to capture that
+    % in the conversion process - todo).
+    \usepackage{caption}
+    \DeclareCaptionLabelFormat{nolabel}{}
+    \captionsetup{labelformat=nolabel}
+
+    \usepackage{adjustbox} % Used to constrain images to a maximum size 
+    \usepackage{xcolor} % Allow colors to be defined
+    \usepackage{enumerate} % Needed for markdown enumerations to work
+    \usepackage{geometry} % Used to adjust the document margins
+    \usepackage{amsmath} % Equations
+    \usepackage{amssymb} % Equations
+    \usepackage{textcomp} % defines textquotesingle
+    % Hack from http://tex.stackexchange.com/a/47451/13684:
+    \AtBeginDocument{%
+        \def\PYZsq{\textquotesingle}% Upright quotes in Pygmentized code
+    }
+    \usepackage{upquote} % Upright quotes for verbatim code
+    \usepackage{eurosym} % defines \euro
+    \usepackage[mathletters]{ucs} % Extended unicode (utf-8) support
+    \usepackage[utf8x]{inputenc} % Allow utf-8 characters in the tex document
+    \usepackage{fancyvrb} % verbatim replacement that allows latex
+    \usepackage{grffile} % extends the file name processing of package graphics 
+                         % to support a larger range 
+    % The hyperref package gives us a pdf with properly built
+    % internal navigation ('pdf bookmarks' for the table of contents,
+    % internal cross-reference links, web links for URLs, etc.)
+    \usepackage{hyperref}
+    \usepackage{longtable} % longtable support required by pandoc >1.10
+    \usepackage{booktabs}  % table support for pandoc > 1.12.2
+    \usepackage[inline]{enumitem} % IRkernel/repr support (it uses the enumerate* environment)
+    \usepackage[normalem]{ulem} % ulem is needed to support strikethroughs (\sout)
+                                % normalem makes italics be italics, not underlines
+    
+
+    
+    
+    % Colors for the hyperref package
+    \definecolor{urlcolor}{rgb}{0,.145,.698}
+    \definecolor{linkcolor}{rgb}{.71,0.21,0.01}
+    \definecolor{citecolor}{rgb}{.12,.54,.11}
+
+    % ANSI colors
+    \definecolor{ansi-black}{HTML}{3E424D}
+    \definecolor{ansi-black-intense}{HTML}{282C36}
+    \definecolor{ansi-red}{HTML}{E75C58}
+    \definecolor{ansi-red-intense}{HTML}{B22B31}
+    \definecolor{ansi-green}{HTML}{00A250}
+    \definecolor{ansi-green-intense}{HTML}{007427}
+    \definecolor{ansi-yellow}{HTML}{DDB62B}
+    \definecolor{ansi-yellow-intense}{HTML}{B27D12}
+    \definecolor{ansi-blue}{HTML}{208FFB}
+    \definecolor{ansi-blue-intense}{HTML}{0065CA}
+    \definecolor{ansi-magenta}{HTML}{D160C4}
+    \definecolor{ansi-magenta-intense}{HTML}{A03196}
+    \definecolor{ansi-cyan}{HTML}{60C6C8}
+    \definecolor{ansi-cyan-intense}{HTML}{258F8F}
+    \definecolor{ansi-white}{HTML}{C5C1B4}
+    \definecolor{ansi-white-intense}{HTML}{A1A6B2}
+
+    % commands and environments needed by pandoc snippets
+    % extracted from the output of `pandoc -s`
+    \providecommand{\tightlist}{%
+      \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+    \DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+    % Add ',fontsize=\small' for more characters per line
+    \newenvironment{Shaded}{}{}
+    \newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{{#1}}}
+    \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{{#1}}}}
+    \newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{{#1}}}
+    \newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{{#1}}}
+    \newcommand{\RegionMarkerTok}[1]{{#1}}
+    \newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\NormalTok}[1]{{#1}}
+    
+    % Additional commands for more recent versions of Pandoc
+    \newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{{#1}}}
+    \newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.73,0.40,0.53}{{#1}}}
+    \newcommand{\ImportTok}[1]{{#1}}
+    \newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.73,0.13,0.13}{\textit{{#1}}}}
+    \newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.10,0.09,0.49}{{#1}}}
+    \newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.40,0.40,0.40}{{#1}}}
+    \newcommand{\BuiltInTok}[1]{{#1}}
+    \newcommand{\ExtensionTok}[1]{{#1}}
+    \newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.74,0.48,0.00}{{#1}}}
+    \newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{{#1}}}
+    \newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    
+    
+    % Define a nice break command that doesn't care if a line doesn't already
+    % exist.
+    \def\br{\hspace*{\fill} \\* }
+    % Math Jax compatability definitions
+    \def\gt{>}
+    \def\lt{<}
+    % Document parameters
+    \title{DMO Assignment 2 - Programming}
+    
+    
+    
+
+    % Pygments definitions
+    
+\makeatletter
+\def\PY@reset{\let\PY@it=\relax \let\PY@bf=\relax%
+    \let\PY@ul=\relax \let\PY@tc=\relax%
+    \let\PY@bc=\relax \let\PY@ff=\relax}
+\def\PY@tok#1{\csname PY@tok@#1\endcsname}
+\def\PY@toks#1+{\ifx\relax#1\empty\else%
+    \PY@tok{#1}\expandafter\PY@toks\fi}
+\def\PY@do#1{\PY@bc{\PY@tc{\PY@ul{%
+    \PY@it{\PY@bf{\PY@ff{#1}}}}}}}
+\def\PY#1#2{\PY@reset\PY@toks#1+\relax+\PY@do{#2}}
+
+\expandafter\def\csname PY@tok@w\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.73,0.73}{##1}}}
+\expandafter\def\csname PY@tok@c\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.74,0.48,0.00}{##1}}}
+\expandafter\def\csname PY@tok@k\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.69,0.00,0.25}{##1}}}
+\expandafter\def\csname PY@tok@o\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ow\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@ne\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.82,0.25,0.23}{##1}}}
+\expandafter\def\csname PY@tok@nv\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@no\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ni\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.60,0.60,0.60}{##1}}}
+\expandafter\def\csname PY@tok@na\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.49,0.56,0.16}{##1}}}
+\expandafter\def\csname PY@tok@nt\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@s\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sd\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@si\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@se\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sr\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@ss\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sx\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@m\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@gh\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gu\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.50,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gr\endcsname{\def\PY@tc##1{\textcolor[rgb]{1.00,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ge\endcsname{\let\PY@it=\textit}
+\expandafter\def\csname PY@tok@gs\endcsname{\let\PY@bf=\textbf}
+\expandafter\def\csname PY@tok@gp\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@go\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.53,0.53}{##1}}}
+\expandafter\def\csname PY@tok@gt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.27,0.87}{##1}}}
+\expandafter\def\csname PY@tok@err\endcsname{\def\PY@bc##1{\setlength{\fboxsep}{0pt}\fcolorbox[rgb]{1.00,0.00,0.00}{1,1,1}{\strut ##1}}}
+\expandafter\def\csname PY@tok@kc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kd\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kr\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@bp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@fm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@vc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vg\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sa\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@dl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s2\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s1\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@mb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@il\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mo\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ch\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cm\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cpf\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@c1\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cs\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+
+\def\PYZbs{\char`\\}
+\def\PYZus{\char`\_}
+\def\PYZob{\char`\{}
+\def\PYZcb{\char`\}}
+\def\PYZca{\char`\^}
+\def\PYZam{\char`\&}
+\def\PYZlt{\char`\<}
+\def\PYZgt{\char`\>}
+\def\PYZsh{\char`\#}
+\def\PYZpc{\char`\%}
+\def\PYZdl{\char`\$}
+\def\PYZhy{\char`\-}
+\def\PYZsq{\char`\'}
+\def\PYZdq{\char`\"}
+\def\PYZti{\char`\~}
+% for compatibility with earlier versions
+\def\PYZat{@}
+\def\PYZlb{[}
+\def\PYZrb{]}
+\makeatother
+
+
+    % Exact colors from NB
+    \definecolor{incolor}{rgb}{0.0, 0.0, 0.5}
+    \definecolor{outcolor}{rgb}{0.545, 0.0, 0.0}
+
+
+
+    
+    % Prevent overflowing lines due to hard-to-break entities
+    \sloppy 
+    % Setup hyperref package
+    \hypersetup{
+      breaklinks=true,  % so long urls are correctly broken across lines
+      colorlinks=true,
+      urlcolor=urlcolor,
+      linkcolor=linkcolor,
+      citecolor=citecolor,
+      }
+    % Slightly bigger margins than the latex defaults
+    
+    \geometry{verbose,tmargin=1in,bmargin=1in,lmargin=1in,rmargin=1in}
+    
+    
+
+    \begin{document}
+    
+    
+    \maketitle
+    
+    
+
+    
+    Hannah Busshoff, Snorri Petersen and Sebastian Wolf
+
+\section*{Table of Content}\label{table-of-content}
+\addcontentsline{toc}{section}{Table of Content}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Edit Distance \newline
+  1.1 Discussion of the problem \newline
+  1.2 Proposed algorithm \newline
+  1.3 Proof of Correctness
+\item
+  Huffman Codes \newline
+  2.1 Discussion of the problem \newline
+  2.2 Proposed algorithm \newline
+  2.3 Proof of Correctness
+\item
+  References
+\end{enumerate}
+
+    \section{Edit Distance}\label{edit-distance}
+
+\subsection{Discussion of the problem}\label{discussion-of-the-problem}
+
+The edit distance is a measure for the similarity of two strings. It
+counts the minimum number of operations required to transform one string
+into another. The operations considered for the edit distance are:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Insert a character
+\item
+  Delete an existing character
+\item
+  Substitute a character by another
+\end{enumerate}
+
+When the edit distance is measured using only these three operations it
+is also called a 'Levensthein distance'. The edit distance has many
+applications, including automatic spelling correction in natural
+language processing or the comparison of DNA in bioinformatics.
+
+In this assignment we are presented with a problem of assessing the
+minimum operations between two sets of two text strings:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  DNA where
+
+  \begin{enumerate}
+  \def\labelenumii{\alph{enumii})}
+  \tightlist
+  \item
+    X = ACTACTAGATTACTTACGGATCAGGTACTTTAGAGGCTTGCAACCAY
+  \item
+    Y = TACTAGCTTACTTACCCATCAGGTTTTAGAGATGGCAACCA
+  \end{enumerate}
+\item
+  Proteins where
+
+  \begin{enumerate}
+  \def\labelenumii{\alph{enumii})}
+  \tightlist
+  \item
+    X = AASRPRSGVPAQSDSDPCQNLAATPIPSRPPSSQSCQKCRADARQGRWGPY
+  \item
+    Y = SGAPGQRGEPGPQGHAGAPGPPGPPGSDG
+  \end{enumerate}
+\end{enumerate}
+
+There are potentially many ways to transform one string into another,
+and trying out all possible combinations to find the lowest cost option
+would be prohibitively expensive. To solve the problem more efficiently,
+we therefore propose an algorithm based on the solution for the longest
+common subsequence that was covered in class. This algortihm falls under
+the dynamic programming paradigm.
+
+The idea of Dynamic Programming is to solve a large problem that has too
+many potential combinations to solve greedily, by dividing it into
+subproblems. In contrast to divide and conquer algorithms, the
+subproblems in dynamic programming overlap; the solution of one
+subproblem depends on the solution of others.
+
+The subproblems in this case involves comparing substrings, rather than
+the whole string at once. The program creates a table where the two
+strings are compared prefix by prefix where all three operations
+(insert, delete and substitude) are available. Here below each operation
+comes with the cost of 1.
+
+    \subsection{Proposed algorithm}\label{proposed-algorithm}
+
+Define a function \textbf{\emph{'compare'}}, which gives for a given
+cell D{[}m,n{]} of the matrix D, where m denotes the row index and n the
+column index, the optimal prior cell that can lead the algorithm to
+D{[}m,n{]} by either deletion, insertion, substitution or no
+manipulations. Optimality is defined in terms of minimal value of the
+available prior cell. If there is a tie between prior cells, the
+algorithm always takes the diagonal.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}1}]:} \PY{c+c1}{\PYZsh{} Import numpy package to create an array.}
+        \PY{k+kn}{import} \PY{n+nn}{numpy} \PY{k}{as} \PY{n+nn}{np}
+        
+        \PY{k}{def} \PY{n+nf}{compare}\PY{p}{(}\PY{n}{D}\PY{p}{,} \PY{n}{m}\PY{p}{,} \PY{n}{n}\PY{p}{,} \PY{n}{cost1}\PY{p}{,} \PY{n}{cost2}\PY{p}{)}\PY{p}{:}
+            \PY{k}{if} \PY{p}{(}\PY{n}{m} \PY{o}{==} \PY{l+m+mi}{0}\PY{p}{)} \PY{o+ow}{and} \PY{p}{(}\PY{n}{n} \PY{o}{\PYZgt{}} \PY{l+m+mi}{0}\PY{p}{)}\PY{p}{:}
+                \PY{k}{return} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{I}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n+nb}{max}\PY{p}{(}\PY{n}{m}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{)}\PY{p}{,} \PY{n+nb}{max}\PY{p}{(}\PY{n}{n}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{)}
+            \PY{k}{elif} \PY{p}{(}\PY{n}{n} \PY{o}{==} \PY{l+m+mi}{0}\PY{p}{)} \PY{o+ow}{and} \PY{p}{(}\PY{n}{m} \PY{o}{\PYZgt{}} \PY{l+m+mi}{0}\PY{p}{)}\PY{p}{:}
+                \PY{k}{return} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{D}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n+nb}{max}\PY{p}{(}\PY{n}{m}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{)}\PY{p}{,} \PY{n+nb}{max}\PY{p}{(}\PY{n}{n}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{)}
+            \PY{k}{elif} \PY{p}{(}\PY{n}{D}\PY{p}{[}\PY{n}{m} \PY{o}{\PYZhy{}} \PY{l+m+mi}{1}\PY{p}{,} \PY{n}{n} \PY{o}{\PYZhy{}} \PY{l+m+mi}{1}\PY{p}{]} \PY{o}{==} \PY{n}{D}\PY{p}{[}\PY{n}{m}\PY{p}{,}\PY{n}{n}\PY{p}{]}\PY{p}{)} \PY{o+ow}{and} \PY{p}{(}\PY{n}{D}\PY{p}{[}\PY{n}{m} \PY{o}{\PYZhy{}} \PY{l+m+mi}{1}\PY{p}{,} \PY{n}{n}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]} \PY{o}{\PYZlt{}}\PY{o}{=} \PY{n+nb}{min}\PY{p}{(}\PY{n}{D}\PY{p}{[}\PY{n}{m}\PY{p}{,} \PY{n}{n}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}
+                \PY{p}{]} \PY{o}{+} \PY{n}{cost1}\PY{p}{,} \PY{n}{D}\PY{p}{[}\PY{n}{m}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{,} \PY{n}{n}\PY{p}{]} \PY{o}{+} \PY{n}{cost1}\PY{p}{)}\PY{p}{)}\PY{p}{:}
+                \PY{k}{return} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{\PYZhy{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n+nb}{max}\PY{p}{(}\PY{n}{m}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{)}\PY{p}{,} \PY{n+nb}{max}\PY{p}{(}\PY{n}{n}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{)} \PY{c+c1}{\PYZsh{} nothing}
+            \PY{k}{elif} \PY{n}{D}\PY{p}{[}\PY{n}{m} \PY{o}{\PYZhy{}} \PY{l+m+mi}{1}\PY{p}{,} \PY{n}{n} \PY{o}{\PYZhy{}} \PY{l+m+mi}{1}\PY{p}{]} \PY{o}{+} \PY{n}{cost2} \PY{o}{\PYZlt{}}\PY{o}{=} \PY{n+nb}{min}\PY{p}{(}\PY{n}{D}\PY{p}{[}\PY{n}{m}\PY{p}{,} \PY{n}{n}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,} \PY{n}{D}\PY{p}{[}\PY{n}{m}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{,} \PY{n}{n}\PY{p}{]}\PY{p}{)} \PY{o}{+} \PY{n}{cost1} \PY{p}{:}
+                \PY{k}{return} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{S}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n+nb}{max}\PY{p}{(}\PY{n}{m}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{)}\PY{p}{,} \PY{n+nb}{max}\PY{p}{(}\PY{n}{n}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{)} \PY{c+c1}{\PYZsh{}substitution}
+            \PY{k}{elif} \PY{n}{D}\PY{p}{[}\PY{n}{m}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{,}\PY{n}{n}\PY{p}{]}  \PY{o}{\PYZlt{}} \PY{n}{D}\PY{p}{[}\PY{n}{m}\PY{p}{,}\PY{n}{n}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{:}
+                \PY{k}{return} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{D}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n+nb}{max}\PY{p}{(}\PY{n}{m}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{)}\PY{p}{,} \PY{n+nb}{max}\PY{p}{(}\PY{n}{n}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{)} \PY{c+c1}{\PYZsh{} deletion}
+            \PY{k}{elif} \PY{n}{D}\PY{p}{[}\PY{n}{m}\PY{p}{,} \PY{n}{n}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]} \PY{o}{\PYZlt{}} \PY{n}{D}\PY{p}{[}\PY{n}{m}\PY{p}{,} \PY{n}{n}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{:}
+                \PY{k}{return} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{I}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n+nb}{max}\PY{p}{(}\PY{n}{m}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{)}\PY{p}{,} \PY{n+nb}{max}\PY{p}{(}\PY{n}{n}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{)} \PY{c+c1}{\PYZsh{} insertion}
+\end{Verbatim}
+
+
+    Define a function \textbf{\emph{'backtrace'}}. The function recovers the
+optimal solution by iteratively applying the compare function. The input
+is D{[}m,n{]}, where m denotes the highest row index and n the highest
+column index. The backtrace function stops when it reaches D{[}0,0{]}
+the starting point of the algorithm.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}2}]:} \PY{k}{def} \PY{n+nf}{backtrace}\PY{p}{(}\PY{n}{D}\PY{p}{,} \PY{n}{m}\PY{p}{,} \PY{n}{n}\PY{p}{,} \PY{n}{cost1}\PY{p}{,} \PY{n}{cost2}\PY{p}{)}\PY{p}{:}
+            \PY{n}{changes} \PY{o}{=} \PY{p}{[}\PY{p}{]} \PY{c+c1}{\PYZsh{} Initialize an empty vector to store the backtrace.}
+            \PY{c+c1}{\PYZsh{} Iteratively apply the compare function to reach D[0,0], }
+            \PY{c+c1}{\PYZsh{} the starting point of the algorithm.}
+            \PY{k}{while} \PY{n}{m} \PY{o}{\PYZgt{}} \PY{l+m+mi}{0} \PY{o+ow}{or} \PY{n}{n} \PY{o}{\PYZgt{}} \PY{l+m+mi}{0}\PY{p}{:}
+                \PY{c+c1}{\PYZsh{} Compute the optimal prior cell.}
+                \PY{n}{result} \PY{o}{=} \PY{n}{compare}\PY{p}{(}\PY{n}{D}\PY{p}{,} \PY{n}{m}\PY{p}{,} \PY{n}{n}\PY{p}{,} \PY{n}{cost1}\PY{p}{,} \PY{n}{cost2}\PY{p}{)} 
+                \PY{c+c1}{\PYZsh{} Store the optimal move in the list changes and append it.}
+                \PY{n}{changes}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{result}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{)} 
+                \PY{n}{m} \PY{o}{=} \PY{n}{result}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]} \PY{c+c1}{\PYZsh{} Update row location.}
+                \PY{n}{n} \PY{o}{=} \PY{n}{result}\PY{p}{[}\PY{l+m+mi}{2}\PY{p}{]} \PY{c+c1}{\PYZsh{} Update column location.}
+            \PY{k}{return} \PY{n}{changes}
+\end{Verbatim}
+
+
+    Define a function \textbf{\emph{'edit\_simple'}}, which computes the
+edit distance, with costs of cost1 for insertion and deletion, and cost2
+for substitution.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}3}]:} \PY{k}{def} \PY{n+nf}{edit\PYZus{}distance}\PY{p}{(}\PY{n}{str1}\PY{p}{,} \PY{n}{str2}\PY{p}{,} \PY{n}{cost1}\PY{p}{,} \PY{n}{cost2}\PY{p}{)}\PY{p}{:}
+            \PY{c+c1}{\PYZsh{}Computing the length of the input strings.}
+            \PY{n}{m} \PY{o}{=} \PY{n+nb}{len}\PY{p}{(}\PY{n}{str1}\PY{p}{)}
+            \PY{n}{n} \PY{o}{=} \PY{n+nb}{len}\PY{p}{(}\PY{n}{str2}\PY{p}{)}
+            \PY{c+c1}{\PYZsh{}Initiliazing the matrix.}
+            \PY{n}{D} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{zeros}\PY{p}{(}\PY{p}{(}\PY{p}{(}\PY{n}{m}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{,} \PY{p}{(}\PY{n}{n}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{)}\PY{p}{)}
+            \PY{c+c1}{\PYZsh{} Filling the matrix from top to bottom, by looping over rows and columns.}
+            \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{m}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{:}
+                \PY{k}{for} \PY{n}{j} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{n}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{:}
+                    \PY{k}{if} \PY{n}{i} \PY{o}{==} \PY{l+m+mi}{0}\PY{p}{:}
+                        \PY{n}{D}\PY{p}{[}\PY{n}{i}\PY{p}{,} \PY{n}{j}\PY{p}{]} \PY{o}{=} \PY{n}{j}\PY{o}{*}\PY{n}{cost1}  \PY{c+c1}{\PYZsh{} insertion}
+                    \PY{k}{elif} \PY{n}{j} \PY{o}{==} \PY{l+m+mi}{0}\PY{p}{:}
+                        \PY{n}{D}\PY{p}{[}\PY{n}{i}\PY{p}{,}\PY{n}{j}\PY{p}{]} \PY{o}{=} \PY{n}{i}\PY{o}{*}\PY{n}{cost1}    \PY{c+c1}{\PYZsh{} deletion}
+                    \PY{k}{elif} \PY{n}{str1}\PY{p}{[}\PY{n}{i}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]} \PY{o}{==} \PY{n}{str2}\PY{p}{[}\PY{n}{j}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{:}
+                        \PY{n}{D}\PY{p}{[}\PY{n}{i}\PY{p}{,} \PY{n}{j}\PY{p}{]} \PY{o}{=} \PY{n}{D}\PY{p}{[}\PY{n}{i}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{,} \PY{n}{j}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}
+                    \PY{k}{else}\PY{p}{:}
+                        \PY{n}{D}\PY{p}{[}\PY{n}{i}\PY{p}{,} \PY{n}{j}\PY{p}{]} \PY{o}{=} \PY{n+nb}{min}\PY{p}{(}\PY{n}{D}\PY{p}{[}\PY{n}{i}\PY{p}{,} \PY{n}{j}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}   \PY{o}{+} \PY{n}{cost1}\PY{p}{,}    \PY{c+c1}{\PYZsh{} insertion}
+                                      \PY{n}{D}\PY{p}{[}\PY{n}{i}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{,} \PY{n}{j}\PY{p}{]}   \PY{o}{+} \PY{n}{cost1}\PY{p}{,}    \PY{c+c1}{\PYZsh{} deletion}
+                                      \PY{n}{D}\PY{p}{[}\PY{n}{i}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{,} \PY{n}{j}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]} \PY{o}{+} \PY{n}{cost2}\PY{p}{)}     \PY{c+c1}{\PYZsh{} substitution}
+            \PY{c+c1}{\PYZsh{}Saving the minimal costs in the variable cost.}
+            \PY{n}{cost} \PY{o}{=} \PY{n}{D}\PY{p}{[}\PY{n}{m}\PY{p}{,}\PY{n}{n}\PY{p}{]}
+            \PY{c+c1}{\PYZsh{} Initialize matrix dimensions to run the backtrace function.}
+            \PY{n}{m} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{size}\PY{p}{(}\PY{n}{D}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{)} \PY{o}{\PYZhy{}} \PY{l+m+mi}{1}
+            \PY{n}{n} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{size}\PY{p}{(}\PY{n}{D}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{)} \PY{o}{\PYZhy{}} \PY{l+m+mi}{1}
+            \PY{c+c1}{\PYZsh{}Getting the backtrace.}
+            \PY{n}{changes} \PY{o}{=} \PY{n}{backtrace}\PY{p}{(}\PY{n}{D}\PY{p}{,} \PY{n}{m}\PY{p}{,} \PY{n}{n}\PY{p}{,} \PY{n}{cost1}\PY{p}{,} \PY{n}{cost2}\PY{p}{)}
+            \PY{k}{return} \PY{n}{cost}\PY{p}{,} \PY{n}{changes}
+\end{Verbatim}
+
+
+    Computing the edit distance and the backtrace if costs of substitution,
+insertion, and deletion equal 1.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}16}]:} \PY{c+c1}{\PYZsh{}Initializing the strings, which shall be analyzed.}
+         \PY{n}{X} \PY{o}{=} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{ACTACTAGATTACTTACGGATCAGGTACTTTAGAGGCTTGCAACCA}\PY{l+s+s2}{\PYZdq{}}
+         \PY{n}{Y} \PY{o}{=} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{TACTAGCTTACTTACCCATCAGGTTTTAGAGATGGCAACCA}\PY{l+s+s2}{\PYZdq{}}
+         
+         \PY{n+nb}{print}\PY{p}{(}\PY{n}{edit\PYZus{}distance}\PY{p}{(}\PY{n}{X}\PY{p}{,}\PY{n}{Y}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{)}
+         \PY{n+nb}{print}\PY{p}{(}\PY{n}{edit\PYZus{}distance}\PY{p}{(}\PY{n}{X}\PY{p}{,}\PY{n}{Y}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}16}]:} ['-',
+          '-',
+          '-',
+          '-',
+          '-',
+          '-',
+          '-',
+          'S',
+          '-',
+          'S',
+          '-',
+          '-',
+          '-',
+          '-',
+          '-',
+          '-',
+          '-',
+          '-',
+          '-',
+          '-',
+          '-',
+          '-',
+          'S',
+          '-',
+          '-',
+          'S',
+          '-',
+          '-',
+          '-',
+          '-',
+          '-',
+          '-',
+          '-',
+          '-',
+          'S',
+          '-',
+          '-',
+          '-',
+          '-',
+          '-',
+          '-',
+          'D',
+          'D',
+          'D',
+          'D',
+          'D']
+\end{Verbatim}
+            
+    Computing the edit distance and the backtrace if costs of substitution
+equal 1 and the costs of insertion, and deletion equal 2.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}5}]:} \PY{n+nb}{print}\PY{p}{(}\PY{n}{edit\PYZus{}distance}\PY{p}{(}\PY{n}{X}\PY{p}{,}\PY{n}{Y}\PY{p}{,}\PY{l+m+mi}{2}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{)}
+        \PY{n+nb}{print}\PY{p}{(}\PY{n}{edit\PYZus{}distance}\PY{p}{(}\PY{n}{X}\PY{p}{,}\PY{n}{Y}\PY{p}{,}\PY{l+m+mi}{2}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+15.0
+['-', '-', '-', '-', '-', '-', '-', 'S', '-', 'S', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', 'S', '-', '-', 'S', '-', '-', '-', '-', '-', '-', '-', '-', 'S', '-', '-', '-', '-', '-', '-', 'D', 'D', 'D', 'D', 'D']
+
+    \end{Verbatim}
+
+    Computing the edit distance and the backtrace if costs of substitution,
+insertion, and deletion equal 1.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}6}]:} \PY{c+c1}{\PYZsh{}Initializing the strings, which shall be analyzed.}
+        \PY{n}{X} \PY{o}{=} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{AASRPRSGVPAQSDSDPCQNLAATPIPSRPPSSQSCQKCRADARQGRWGP}\PY{l+s+s2}{\PYZdq{}}
+        \PY{n}{Y} \PY{o}{=} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{SGAPGQRGEPGPQGHAGAPGPPGPPGSDG}\PY{l+s+s2}{\PYZdq{}}
+        
+        \PY{n+nb}{print}\PY{p}{(}\PY{n}{edit\PYZus{}distance}\PY{p}{(}\PY{n}{X}\PY{p}{,}\PY{n}{Y}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{)}
+        \PY{n+nb}{print}\PY{p}{(}\PY{n}{edit\PYZus{}distance}\PY{p}{(}\PY{n}{X}\PY{p}{,}\PY{n}{Y}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+37.0
+['-', '-', 'S', '-', '-', 'S', 'S', '-', 'S', 'S', 'S', 'S', 'S', 'S', 'S', 'S', '-', '-', 'S', '-', 'S', 'S', 'S', '-', 'S', '-', '-', '-', '-', 'D', 'D', 'D', 'D', 'D', 'D', 'D', 'D', 'D', 'D', 'D', 'D', 'D', 'D', 'D', 'D', 'D', 'D', 'D', 'D', 'D']
+
+    \end{Verbatim}
+
+    Computing the edit distance and the backtrace if costs of substitution
+equal 1 and the costs of insertion, and deletion equal 2.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}7}]:} \PY{n+nb}{print}\PY{p}{(}\PY{n}{edit\PYZus{}distance}\PY{p}{(}\PY{n}{X}\PY{p}{,}\PY{n}{Y}\PY{p}{,}\PY{l+m+mi}{2}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{)}
+        \PY{n+nb}{print}\PY{p}{(}\PY{n}{edit\PYZus{}distance}\PY{p}{(}\PY{n}{X}\PY{p}{,}\PY{n}{Y}\PY{p}{,}\PY{l+m+mi}{2}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+58.0
+['-', '-', 'S', '-', '-', 'S', 'S', '-', 'S', 'S', 'S', 'S', 'S', 'S', 'S', 'S', '-', '-', 'S', '-', 'S', 'S', 'S', '-', 'S', '-', '-', '-', '-', 'D', 'D', 'D', 'D', 'D', 'D', 'D', 'D', 'D', 'D', 'D', 'D', 'D', 'D', 'D', 'D', 'D', 'D', 'D', 'D', 'D']
+
+    \end{Verbatim}
+
+    \subsection{Proof of Correctness}\label{proof-of-correctness}
+
+While calculating the given problems along with the added problem
+correctly our algorithm has utilized all possible solutions (insert,
+delete and substitution). The subproblems and their solutions are finite
+and can only be of the following nature: (i-1, j), (i, j-1) and (i-1,
+j-1). The algorithm provides a correct solution to the above problems
+and it's subproblems showing the full extent of it's functionality as
+seen in the above table. We can therefore say that the algorithm can
+wield any of the possible solutions successfully. Now when a problem is
+larger (longer text strings) we can expect it to deliver the correct
+outcome because it is just a matter of having the recursive part of our
+algorithm run longer until it reaches the end. We can therefore assume
+that it will also prove to be correct for problems of larger size for,
+in a longer chain of subproblems (bigger strings of text) the
+subproblems will not differ in nature nor will the available solutions
+and the algorithm's ability to apply them.
+
+We can equally say that if a person can take an initial step in a
+staircase there is nothing technically lacking in order to take the
+remaining steps.
+
+    \section{Huffman codes}\label{huffman-codes}
+
+\subsection{Discussion of the probem}\label{discussion-of-the-probem}
+
+    \subsection{The proposed algorithm}\label{the-proposed-algorithm}
+
+    The \textbf{\emph{'frequency\_count'}} function takes a text input
+string and creates a dictionary (frequency\_table) of characters found
+in the text as keys and their absolute frequency as values. This is
+implemented through a for-loop through the text input string that checks
+whether the iterative is already a key in the dictionary and if not,
+creates it, and if it is, augments its value. The dictionary is then
+transformed, by swapping keys and values, which transforms the
+dictionary into a list of tuples which are sorted by frequency. This
+list of ordered tuples is then returned as output.
+
+The cost of this operation is O(n) because the loop runs through n
+operations, and the lookup in the dictionary is constant cost, given
+that the length of the alphabet is fixed.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}8}]:} \PY{k}{def} \PY{n+nf}{frequency\PYZus{}count}\PY{p}{(}\PY{n}{text}\PY{p}{)}\PY{p}{:}
+            \PY{c+c1}{\PYZsh{} initialise a dictionary \PYZhy{} keys: characters, values: frequency}
+            \PY{n}{frequency\PYZus{}table} \PY{o}{=} \PY{p}{\PYZob{}}\PY{p}{\PYZcb{}}
+            \PY{c+c1}{\PYZsh{} loop through the string}
+            \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n}{text}\PY{o}{.}\PY{n}{lower}\PY{p}{(}\PY{p}{)}\PY{p}{:}
+                \PY{c+c1}{\PYZsh{} check whether character is already in dictionary}
+                \PY{k}{if} \PY{n}{i} \PY{o+ow}{not} \PY{o+ow}{in} \PY{n}{frequency\PYZus{}table}\PY{p}{:}
+                    \PY{c+c1}{\PYZsh{} if not in dictionary, add it with frequency 1}
+                    \PY{n}{frequency\PYZus{}table}\PY{p}{[}\PY{n+nb}{str}\PY{p}{(}\PY{n}{i}\PY{p}{)}\PY{p}{]} \PY{o}{=} \PY{l+m+mi}{1}
+                \PY{k}{else}\PY{p}{:}
+                    \PY{c+c1}{\PYZsh{} if it is in dictionary, augment its frequency by 1}
+                    \PY{n}{frequency\PYZus{}table}\PY{p}{[}\PY{n+nb}{str}\PY{p}{(}\PY{n}{i}\PY{p}{)}\PY{p}{]} \PY{o}{=} \PY{n}{frequency\PYZus{}table}\PY{p}{[}\PY{n+nb}{str}\PY{p}{(}\PY{n}{i}\PY{p}{)}\PY{p}{]} \PY{o}{+} \PY{l+m+mi}{1}
+            \PY{c+c1}{\PYZsh{} swap keys and values, transform into list, and sort the list}
+            \PY{n}{frequency\PYZus{}table} \PY{o}{=} \PY{n+nb}{sorted}\PY{p}{(}\PY{p}{[}\PY{p}{(}\PY{n}{v}\PY{p}{,} \PY{n}{k}\PY{p}{)} \PY{k}{for} \PY{n}{k}\PY{p}{,} \PY{n}{v} \PY{o+ow}{in} \PY{n}{frequency\PYZus{}table}\PY{o}{.}\PY{n}{items}\PY{p}{(}\PY{p}{)}\PY{p}{]}\PY{p}{)}
+            \PY{k}{return} \PY{n}{frequency\PYZus{}table}
+\end{Verbatim}
+
+
+    The \textbf{\emph{'build\_tree'}} function first calls the
+\textbf{\emph{'frequency\_count'}} function on the text input string it
+is given, and then builds a Huffman tree from it. The function iterates
+through the list from lowest to highest frequency, at each step creating
+a new node with the two character tuples with lowest frequency. The node
+is created as a nested list with two entries, the sum of the two
+children's frequencies, and a nested list with the two tuples. The node
+is then inserted back into the list that its entries were extracted
+from, with the position chosen by a for loop that compares the nodes
+value with each entry from the originator list until the node value is
+larger than the iterator's value. This loop runs as long as the top
+level list is longer than 1. When it reaches length 1, the tree is
+complete and returned as a nested list.
+
+The cost of this operation is constant, because it depends only on the
+length of the dictionary given as input, which depends only of the
+length of the alphabet and thus is fixed.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}9}]:} \PY{k}{def} \PY{n+nf}{build\PYZus{}tree}\PY{p}{(}\PY{n}{text}\PY{p}{)}\PY{p}{:}
+            \PY{c+c1}{\PYZsh{} call frequency\PYZus{}count function and assign to tree}
+            \PY{n}{tree} \PY{o}{=} \PY{n}{frequency\PYZus{}count}\PY{p}{(}\PY{n}{text}\PY{p}{)}
+            \PY{c+c1}{\PYZsh{} loop over the list, until its length is 1}
+            \PY{k}{while} \PY{n+nb}{len}\PY{p}{(}\PY{n}{tree}\PY{p}{)} \PY{o}{\PYZgt{}} \PY{l+m+mi}{1}\PY{p}{:}
+                \PY{c+c1}{\PYZsh{} pop out the two lowest value nodes and merge into new node}
+                \PY{n}{node} \PY{o}{=} \PY{p}{[}\PY{n}{tree}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]} \PY{o}{+} \PY{n}{tree}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{p}{[}\PY{n}{tree}\PY{o}{.}\PY{n}{pop}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{)}\PY{p}{,} \PY{n}{tree}\PY{o}{.}\PY{n}{pop}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{)}\PY{p}{]}\PY{p}{]}
+                \PY{c+c1}{\PYZsh{} check where to place the new node}
+                \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n}{tree}\PY{p}{)}\PY{p}{)}\PY{p}{:}
+                    \PY{c+c1}{\PYZsh{} if the node\PYZsq{}s value \PYZgt{} the current iterate, continue}
+                    \PY{k}{if} \PY{n}{node}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]} \PY{o}{\PYZgt{}} \PY{n}{tree}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{:}
+                        \PY{k}{pass}
+                    \PY{c+c1}{\PYZsh{} if not, assign the iterate\PYZsq{}s value to an index}
+                    \PY{k}{else}\PY{p}{:}
+                        \PY{n}{index} \PY{o}{=} \PY{n}{i}
+                        \PY{k}{break}
+                \PY{c+c1}{\PYZsh{} insert the node at the index we found in the for loop}
+                \PY{n}{tree}\PY{o}{.}\PY{n}{insert}\PY{p}{(}\PY{n}{index}\PY{p}{,} \PY{n}{node}\PY{p}{)}
+            \PY{k}{return} \PY{n}{tree}
+\end{Verbatim}
+
+
+    The \textbf{\emph{'climb\_tree'}} function first calls the
+\textbf{\emph{'build\_tree'}} function on the text input it is given,
+gets a Huffman tree in the form of a nested list, and then assigns codes
+to each node of the tree. The function climbs the tree from its root,
+taking left and right steps. While climbing, the function builds a
+dictionary with characters from the tree-nodes making up the keys, and
+code assignments making up the values. The dictionary is updated at
+every step that encounters a leaf of the tree, which is detected with an
+if condition that checks whether the node contains a string. If a node
+does not contain a string, this means that another list is nested inside
+the node, and that we are on a branch rather than a leaf of the tree. In
+the case of a branch, the function continues climbing with right and
+left steps. Right steps at a 1 to the code string, left steps add a 0 to
+the code string.
+
+The cost of this operation is constant, because it depends only on the
+length of the nested list it receives as an input. The length and depth
+of the nested list in turn depends only on the length of the alphabet,
+which, again, is fixed.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}10}]:} \PY{k}{def} \PY{n+nf}{climb\PYZus{}tree}\PY{p}{(}\PY{n}{text}\PY{p}{)}\PY{p}{:}
+             \PY{c+c1}{\PYZsh{} call the build\PYZus{}tree function on the text to get a Huffman tree}
+             \PY{n}{tree} \PY{o}{=} \PY{n}{build\PYZus{}tree}\PY{p}{(}\PY{n}{text}\PY{p}{)}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}
+             \PY{c+c1}{\PYZsh{} initialise a code variable to store codes we will assign}
+             \PY{n}{code} \PY{o}{=} \PY{n+nb}{str}\PY{p}{(}\PY{p}{)}
+             \PY{c+c1}{\PYZsh{} initialise a dictionary that will hold our codes}
+             \PY{n}{dictionary} \PY{o}{=} \PY{p}{\PYZob{}}\PY{p}{\PYZcb{}}
+         
+             \PY{c+c1}{\PYZsh{} define a function that accesses the first element of a node}
+             \PY{k}{def} \PY{n+nf}{right\PYZus{}step}\PY{p}{(}\PY{n}{branch}\PY{p}{,} \PY{n}{code}\PY{p}{)}\PY{p}{:}
+                 \PY{c+c1}{\PYZsh{} go down to first element}
+                 \PY{n}{branch} \PY{o}{=} \PY{n}{branch}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}
+                 \PY{c+c1}{\PYZsh{} add a 1 to the code string}
+                 \PY{n}{code} \PY{o}{=} \PY{n}{code} \PY{o}{+} \PY{n+nb}{str}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{)}
+                 \PY{c+c1}{\PYZsh{} check if we have reached a string rather than a list}
+                 \PY{k}{if} \PY{n+nb}{type}\PY{p}{(}\PY{n}{branch}\PY{p}{)} \PY{o}{==} \PY{n+nb}{str}\PY{p}{:}
+                     \PY{c+c1}{\PYZsh{} if yes, access the dictionary}
+                     \PY{k}{nonlocal} \PY{n}{dictionary}
+                     \PY{c+c1}{\PYZsh{} assign the current code to the string found}
+                     \PY{n}{dictionary}\PY{p}{[}\PY{n}{branch}\PY{p}{]} \PY{o}{=} \PY{n}{code}
+                 \PY{k}{else}\PY{p}{:}
+                     \PY{c+c1}{\PYZsh{} if not, take both a right and left step}
+                     \PY{n}{right\PYZus{}step}\PY{p}{(}\PY{n}{branch}\PY{p}{,} \PY{n}{code}\PY{p}{)}
+                     \PY{n}{left\PYZus{}step}\PY{p}{(}\PY{n}{branch}\PY{p}{,} \PY{n}{code}\PY{p}{)}
+                     
+             \PY{c+c1}{\PYZsh{} define a fucntion that accesses the second element of a node}
+             \PY{k}{def} \PY{n+nf}{left\PYZus{}step}\PY{p}{(}\PY{n}{branch}\PY{p}{,} \PY{n}{code}\PY{p}{)}\PY{p}{:}
+                 \PY{c+c1}{\PYZsh{} \PYZsh{} go down to second element}
+                 \PY{n}{branch} \PY{o}{=} \PY{n}{branch}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}
+                 \PY{c+c1}{\PYZsh{} add a 0 to the code string}
+                 \PY{n}{code} \PY{o}{=} \PY{n}{code} \PY{o}{+} \PY{n+nb}{str}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{)}
+                 \PY{c+c1}{\PYZsh{} check if we have reached a string rather than a list}
+                 \PY{k}{if} \PY{n+nb}{type}\PY{p}{(}\PY{n}{branch}\PY{p}{)} \PY{o}{==} \PY{n+nb}{str}\PY{p}{:}
+                     \PY{c+c1}{\PYZsh{} if yes, access the dictionary}
+                     \PY{k}{nonlocal} \PY{n}{dictionary}
+                     \PY{c+c1}{\PYZsh{} assign the current code to the string found}
+                     \PY{n}{dictionary}\PY{p}{[}\PY{n}{branch}\PY{p}{]} \PY{o}{=} \PY{n}{code}
+                 \PY{k}{else}\PY{p}{:}
+                     \PY{c+c1}{\PYZsh{} if not, take both a right and left step}
+                     \PY{n}{right\PYZus{}step}\PY{p}{(}\PY{n}{branch}\PY{p}{,} \PY{n}{code}\PY{p}{)}
+                     \PY{n}{left\PYZus{}step}\PY{p}{(}\PY{n}{branch}\PY{p}{,} \PY{n}{code}\PY{p}{)}
+                     
+             \PY{c+c1}{\PYZsh{} these are the first two steps, which go both left and right}
+             \PY{n}{left\PYZus{}step}\PY{p}{(}\PY{n}{tree}\PY{p}{,} \PY{n}{code}\PY{p}{)}
+             \PY{n}{right\PYZus{}step}\PY{p}{(}\PY{n}{tree}\PY{p}{,} \PY{n}{code}\PY{p}{)}
+             \PY{c+c1}{\PYZsh{} return the dictionary with key: string, value: code.}
+             \PY{k}{return} \PY{n}{dictionary}
+\end{Verbatim}
+
+
+    The \textbf{\emph{'encode'}} function calls the
+\textbf{\emph{'climb\_tree'}} function to get a dictionary of characters
+in the text with their code assignments. It iterates through the input
+text string and creates an output text string where every character is
+replaced with their code assignment. It then returns the encoded output
+string.
+
+The cost of this operation is O(n), because each character needs to be
+replaced.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}11}]:} \PY{k}{def} \PY{n+nf}{encode}\PY{p}{(}\PY{n}{text}\PY{p}{)}\PY{p}{:}
+             \PY{c+c1}{\PYZsh{} call the climb\PYZus{}tree function to get string\PYZhy{}code assignments}
+             \PY{n}{dictionary} \PY{o}{=} \PY{n}{climb\PYZus{}tree}\PY{p}{(}\PY{n}{text}\PY{p}{)}
+             \PY{c+c1}{\PYZsh{} initialise output string}
+             \PY{n}{encoded\PYZus{}text} \PY{o}{=} \PY{n+nb}{str}\PY{p}{(}\PY{p}{)}
+             \PY{c+c1}{\PYZsh{} iterate through text}
+             \PY{k}{for} \PY{n}{character} \PY{o+ow}{in} \PY{n}{text}\PY{o}{.}\PY{n}{lower}\PY{p}{(}\PY{p}{)}\PY{p}{:}
+                 \PY{c+c1}{\PYZsh{} augment output string with code assignment for each string}
+                 \PY{n}{encoded\PYZus{}text} \PY{o}{+}\PY{o}{=} \PY{n}{dictionary}\PY{p}{[}\PY{n}{character}\PY{p}{]}
+             \PY{k}{return} \PY{n}{encoded\PYZus{}text}
+\end{Verbatim}
+
+
+    The \textbf{\emph{'decode'}} function requires the same dictionary used
+to encode a text string, and the encoded text as input. First, it swaps
+the keys and values of the dictionary such that the codes are keys, and
+the characters are values. It then iterates through the encoded text and
+checks whether it can find an iterate in the dictionary. If not, it adds
+the next iterate and checks whether it can find this longer code in the
+dictionary. Once it finds a code sequence it can find in the dictionary
+it adds the corresponding dictionary entry to the output string. Once
+the function has iterated through the entire encoded text it has
+recovered the original text string and outputs it.
+
+The cost of this operation is O(n), because each character is recovered
+in turn. The length of the encoded string is proportional to the
+alphabet used. More complex alphabets will require longer code strings.
+Regardless, this increases the cost of the algorithm only by a constant.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}12}]:} \PY{k}{def} \PY{n+nf}{decode}\PY{p}{(}\PY{n}{dictionary}\PY{p}{,} \PY{n}{code}\PY{p}{)}\PY{p}{:}
+             \PY{c+c1}{\PYZsh{} get dictionary with string\PYZhy{}code assignments and swap keys and values}
+             \PY{n}{dictionary} \PY{o}{=} \PY{n+nb}{dict}\PY{p}{(}\PY{p}{[}\PY{p}{(}\PY{n}{v}\PY{p}{,} \PY{n}{k}\PY{p}{)} \PY{k}{for} \PY{n}{k}\PY{p}{,} \PY{n}{v} \PY{o+ow}{in} \PY{n}{dictionary}\PY{o}{.}\PY{n}{items}\PY{p}{(}\PY{p}{)}\PY{p}{]}\PY{p}{)}
+             \PY{c+c1}{\PYZsh{} initialise output string}
+             \PY{n}{text} \PY{o}{=} \PY{n+nb}{str}\PY{p}{(}\PY{p}{)}
+             \PY{c+c1}{\PYZsh{} initialise pointer for the encoded text}
+             \PY{n}{index} \PY{o}{=} \PY{l+m+mi}{0}
+             \PY{c+c1}{\PYZsh{} iterate through encoded text,}
+             \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n}{code}\PY{p}{)}\PY{p}{)}\PY{p}{:}
+                 \PY{c+c1}{\PYZsh{} consider expanding encoded text sequence until a match in dict}
+                 \PY{k}{if} \PY{n}{code}\PY{p}{[}\PY{n}{index}\PY{p}{:}\PY{n}{i}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{]} \PY{o+ow}{in} \PY{n}{dictionary}\PY{p}{:}
+                     \PY{c+c1}{\PYZsh{} augment output text by the matched string}
+                     \PY{n}{text} \PY{o}{=} \PY{n}{text} \PY{o}{+} \PY{n}{dictionary}\PY{p}{[}\PY{n}{code}\PY{p}{[}\PY{n}{index}\PY{p}{:}\PY{n}{i}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{]}
+                     \PY{n}{index} \PY{o}{=} \PY{n}{i} \PY{o}{+} \PY{l+m+mi}{1}
+             \PY{k}{return}\PY{p}{(}\PY{n}{text}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}13}]:} \PY{c+c1}{\PYZsh{} Text examples}
+         
+         \PY{n}{T1} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{O all you host of heaven! O earth! What else? And shall I couple }\PY{l+s+s1}{\PYZsq{}}\PYZbs{}
+         \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{hell? Oh, fie! Hold, hold, my heart, And you, my sinews, grow not instant }\PY{l+s+s1}{\PYZsq{}}\PYZbs{}
+         \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{old, But bear me stiffly up. Remember thee! Ay, thou poor ghost, whiles }\PY{l+s+s1}{\PYZsq{}}\PYZbs{}
+         \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{memory holds a seat In this distracted globe. Remember thee! Yea, from }\PY{l+s+s1}{\PYZsq{}}\PYZbs{}
+         \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{the table of my memory I’ll wipe away all trivial fond records, All saws }\PY{l+s+s1}{\PYZsq{}}\PYZbs{}
+         \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{of books, all forms, all pressures past That youth and observation copied }\PY{l+s+s1}{\PYZsq{}}\PYZbs{}
+         \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{there, And thy commandment all alone shall live Within the book and volume }\PY{l+s+s1}{\PYZsq{}}\PYZbs{}
+         \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{of my brain, Unmixed with baser matter. Yes, by heaven! O most pernicious }\PY{l+s+s1}{\PYZsq{}}\PYZbs{}
+         \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{woman! O villain, villain, smiling, damned villain! My tables! Meet it is }\PY{l+s+s1}{\PYZsq{}}\PYZbs{}
+         \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{I set it down That one may smile, and smile, and be a villain. At least }\PY{l+s+s1}{\PYZsq{}}\PYZbs{}
+         \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{I’m sure it may be so in Denmark. So, uncle, there you are. Now to my word.}\PY{l+s+s1}{\PYZsq{}}
+         
+         \PY{n}{T2} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Habe nun, ach! Philosophie, Juristerei und Medizin, Und leider auch }\PY{l+s+s1}{\PYZsq{}}\PYZbs{}
+         \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Theologie Durchaus studiert, mit heissem Bemühn. Da steh ich nun, ich armer }\PY{l+s+s1}{\PYZsq{}}\PYZbs{}
+         \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Tor! Und bin so klug als wie zuvor; Heisse Magister, heisse Doktor gar Und }\PY{l+s+s1}{\PYZsq{}}\PYZbs{}
+         \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{ziehe schon an die zehen Jahr Herauf, herab und quer und krumm Meine }\PY{l+s+s1}{\PYZsq{}}\PYZbs{}
+         \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Schüler an der Nase herum Und sehe, dass wir nichts wissen können! Das }\PY{l+s+s1}{\PYZsq{}}\PYZbs{}
+         \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{will mir schier das Herz verbrennen. Zwar bin ich gescheiter als all die }\PY{l+s+s1}{\PYZsq{}}\PYZbs{}
+         \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Laffen, Doktoren, Magister, Schreiber und Pfaffen; Mich plagen keine }\PY{l+s+s1}{\PYZsq{}}\PYZbs{}
+         \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Skrupel noch Zweifel, Fürchte mich weder vor Hölle noch Teufel Dafür }\PY{l+s+s1}{\PYZsq{}}\PYZbs{}
+         \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{ist mir auch alle Freud entrissen, Bilde mir nicht ein, was Rechts zu }\PY{l+s+s1}{\PYZsq{}}\PYZbs{}
+         \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{wissen, Bilde mir nicht ein, ich könnte was lehren, Die Menschen zu }\PY{l+s+s1}{\PYZsq{}}\PYZbs{}
+         \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{bessern und zu bekehren. Auch hab ich weder Gut noch Geld, Noch Ehr und }\PY{l+s+s1}{\PYZsq{}}\PYZbs{}
+         \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Herrlichkeit der Welt; Es möchte kein Hund so länger leben! Drum hab ich }\PY{l+s+s1}{\PYZsq{}}\PYZbs{}
+         \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{mich der Magie ergeben, Ob mir durch Geistes Kraft und Mund Nicht manch }\PY{l+s+s1}{\PYZsq{}}\PYZbs{}
+         \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Geheimnis würde kund; Dass ich nicht mehr mit saurem Schweiss Zu sagen }\PY{l+s+s1}{\PYZsq{}}\PYZbs{}
+         \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{brauche, was ich nicht weiss; Dass ich erkenne, was die Welt Im Innersten }\PY{l+s+s1}{\PYZsq{}}\PYZbs{}
+         \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{zusammenhält, Schau alle Wirkenskraft und Samen, Und tu nicht mehr in }\PY{l+s+s1}{\PYZsq{}}\PYZbs{}
+         \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Worten kramen.}\PY{l+s+s1}{\PYZsq{}}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}14}]:} \PY{n}{climb\PYZus{}tree}\PY{p}{(}\PY{n}{T1}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}14}]:} \{'l': '0111',
+          'o': '0110',
+          '’': '01011111',
+          'x': '010111101',
+          '?': '010111100',
+          'k': '01011101',
+          'g': '01011100',
+          'w': '010110',
+          '.': '0101011',
+          'c': '0101010',
+          'u': '010100',
+          'a': '0100',
+          'h': '00111',
+          'r': '00110',
+          'b': '001011',
+          'p': '0010101',
+          '!': '0010100',
+          'm': '00100',
+          'e': '0001',
+          'n': '00001',
+          's': '00000',
+          ' ': '11',
+          'f': '101111',
+          'v': '101110',
+          'y': '10110',
+          'i': '1010',
+          ',': '10011',
+          'd': '10010',
+          't': '1000'\}
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}15}]:} \PY{n}{climb\PYZus{}tree}\PY{p}{(}\PY{n}{T2}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}15}]:} \{'h': '0111',
+          'm': '01101',
+          't': '01100',
+          'i': '0101',
+          'p': '01001111',
+          'ü': '01001110',
+          'ä': '010011011',
+          'q': '0100110101',
+          'j': '0100110100',
+          ';': '01001100',
+          'o': '010010',
+          'w': '010001',
+          ',': '010000',
+          'n': '0011',
+          'c': '00101',
+          'd': '00100',
+          ' ': '000',
+          'u': '1111',
+          'a': '1110',
+          'z': '110111',
+          'f': '110110',
+          'v': '11010111',
+          '!': '11010110',
+          '.': '11010101',
+          'ö': '11010100',
+          'g': '110100',
+          's': '1100',
+          'e': '101',
+          'l': '10011',
+          'b': '100101',
+          'k': '100100',
+          'r': '1000'\}
+\end{Verbatim}
+            
+    \section{References}\label{references}
+
+Huffman, D. (1952). "A Method for the Construction of Minimum-Redundancy
+Codes" (PDF). Proceedings of the IRE. 40 (9): 1098--1101.
+doi:10.1109/JRPROC.1952.273898.
+
+
+    % Add a bibliography block to the postdoc
+    
+    
+    
+    \end{document}
